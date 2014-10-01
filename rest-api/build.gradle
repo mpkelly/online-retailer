@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.7
+
+jar {
+    baseName = 'rest-service'
+    version =  '1.0'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-release" }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.hateoas:spring-hateoas")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile("com.jayway.jsonpath:json-path:0.9.1")
+    compile project(':database')
+
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.42.2'
+    testCompile("junit:junit")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
+

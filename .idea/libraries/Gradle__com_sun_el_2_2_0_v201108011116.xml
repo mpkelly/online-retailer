@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sun.el-2.2.0.v201108011116">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/orbit/com.sun.el/2.2.0.v201108011116/com.sun.el-2.2.0.v201108011116.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: jetty-server-8.1.15.v20140411">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/8.1.15.v20140411/jetty-server-8.1.15.v20140411.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

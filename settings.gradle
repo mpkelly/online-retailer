@@ -1,0 +1,8 @@
+rootProject.name = 'online-retailer'
+
+include 'database'
+
+include 'rest-api'
+
+include 'acceptance-tests'
+
