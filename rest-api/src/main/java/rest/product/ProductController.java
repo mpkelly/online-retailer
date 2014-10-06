@@ -37,6 +37,7 @@ public class ProductController {
         productApi.add(linkTo(methodOn(this.getClass()).findProductById(":id")).withRel("find-by-id"));
         productApi.add(linkTo(methodOn(this.getClass()).createProduct(":json")).withRel("create-product"));
         productApi.add(linkTo(methodOn(this.getClass()).searchProducts(":terms")).withRel("search-products"));
+        productApi.add(linkTo(methodOn(this.getClass()).allProducts()).withRel("all-products"));
 
         return new ResponseEntity<>(productApi, HttpStatus.OK);
     }
@@ -72,4 +73,16 @@ public class ProductController {
 
         return new ResponseEntity<>(jsonProducts, HttpStatus.OK);
     }
+
+    @RequestMapping("/api/product/all")
+    @ResponseBody
+    public HttpEntity<JsonProducts> allProducts() {
+        List<Product> products = repository.findAll();
+
+        JsonProducts jsonProducts = jsonProducts(products);
+        jsonProducts.add(linkTo(methodOn(getClass()).allProducts()).withSelfRel());
+
+        return new ResponseEntity<>(jsonProducts, HttpStatus.OK);
+    }
+
 }
