@@ -22,7 +22,7 @@ public class AbstractRepositoryTest implements DbConfiguration {
     private final String collectionName;
 
     public AbstractRepositoryTest(String collectionName) {
-        this (DB_HOST, DB_PORT, collectionName);
+        this (DB_HOST, 27777, collectionName);
     }
 
     public AbstractRepositoryTest(String hostname, int port, String collectionName) {

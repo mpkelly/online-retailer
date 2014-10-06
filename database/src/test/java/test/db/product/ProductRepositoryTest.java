@@ -1,9 +1,10 @@
-package test.db;
+package test.db.product;
 
 import db.product.Product;
 import db.product.ProductRepository;
 import org.junit.Before;
 import org.junit.Test;
+import test.db.AbstractRepositoryTest;
 
 import java.util.HashMap;
 import java.util.Map;
