@@ -33,7 +33,7 @@ public class Product {
     }
 
     public List<String> categoryIds() {
-        return new ArrayList<String>(categoryIds);
+        return new ArrayList<>(categoryIds);
     }
 
     public String name() {

@@ -24,6 +24,7 @@ public class RootController {
         RootApi rootApi = new RootApi("1.0");
 
         rootApi.add(linkTo(methodOn(ProductController.class).getProductApi()).withRel("product"));
+        rootApi.add(linkTo(methodOn(RootController.class).getApiDetails()).withSelfRel());
 
         return new ResponseEntity<>(rootApi, HttpStatus.OK);
     }

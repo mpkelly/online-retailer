@@ -10,7 +10,6 @@ import java.util.Map;
 
 import static db.product.Product.*;
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
 
 public class ProductRepositoryTest extends AbstractRepositoryTest {
@@ -77,8 +76,8 @@ public class ProductRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void can_find_products_by_text_search() {
-        assertEquals("size", 0, repository.findByText("text string that does not exist in database").size());
-        assertEquals("size", 1, repository.findByText("product 1 desc").size());
-        assertEquals("size", 2, repository.findByText("product").size());
+        assertEquals("size", 0, repository.searchByText("text string that does not exist in database").size());
+        assertEquals("size", 1, repository.searchByText("product 1 desc").size());
+        assertEquals("size", 2, repository.searchByText("product").size());
     }
 }

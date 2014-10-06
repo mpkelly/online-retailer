@@ -2,6 +2,7 @@ package test.db;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import db.DbConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import test.support.FakeMongoServer;
@@ -10,7 +11,7 @@ import test.support.MongoLoader;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-public class AbstractRepositoryTest {
+public class AbstractRepositoryTest implements DbConfiguration {
 
     private final FakeMongoServer server;
     private MongoClient mongoClient;
@@ -21,7 +22,7 @@ public class AbstractRepositoryTest {
     private final String collectionName;
 
     public AbstractRepositoryTest(String collectionName) {
-        this ("localhost", 8889, collectionName);
+        this (DB_HOST, DB_PORT, collectionName);
     }
 
     public AbstractRepositoryTest(String hostname, int port, String collectionName) {
@@ -37,7 +38,7 @@ public class AbstractRepositoryTest {
         server.start(hostname, port);
         mongoLoader.start(hostname, port);
         mongoClient = new MongoClient(hostname, port);
-        database = mongoClient.getDB("testdb");
+        database = mongoClient.getDB(DB_NAME);
     }
 
     @After

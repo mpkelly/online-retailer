@@ -4,7 +4,6 @@ import com.mongodb.*;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -50,7 +49,7 @@ public class ProductRepository {
         return cursorToList(collection.find(new BasicDBObject(PRICE, range)));
     }
 
-    public List<Product> findByText(String text) {
+    public List<Product> searchByText(String text) {
         Pattern pattern = Pattern.compile(text, CASE_INSENSITIVE);
 
         BasicDBList terms = new BasicDBList();
