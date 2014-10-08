@@ -65,7 +65,7 @@ public class ProductRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void can_find_all_products() {
-        assertEquals("size", 2, repository.find(2, 1).size());
+        assertEquals("size", 2, repository.browse(2, 1).size());
     }
 
     @Test

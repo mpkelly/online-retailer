@@ -76,8 +76,8 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void can_find_customers() {
-        assertEquals("size", 1, repository.find(1, 1).size());
-        assertEquals("size", 1, repository.find(1, 2).size());
-        assertEquals("size", 2, repository.find(10, 1).size());
+        assertEquals("size", 1, repository.browse(1, 1).size());
+        assertEquals("size", 1, repository.browse(1, 2).size());
+        assertEquals("size", 2, repository.browse(10, 1).size());
     }
 }

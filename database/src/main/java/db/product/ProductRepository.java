@@ -1,49 +1,22 @@
 package db.product;
 
 import com.mongodb.*;
-import org.bson.types.ObjectId;
+import db.AbstractRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import static db.product.Product.*;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
-public class ProductRepository {
-
-    private final DBCollection collection;
+public class ProductRepository extends AbstractRepository<Product> {
 
     public ProductRepository(DB database) {
-        this.collection = database.getCollection("product");
-    }
-
-    public Product insert(Map<String, Object> fields) {
-        BasicDBObject product = new BasicDBObject(fields);
-        collection.insert(product);
-        return new Product(product);
-    }
-
-    public Product findById(String id) {
-        BasicDBObject document = (BasicDBObject) collection
-                .findOne(new BasicDBObject(ID, new ObjectId(id)));
-
-        return new Product(document);
+        super(database.getCollection("product"));
     }
 
     public List<Product> findByName(String name) {
         return cursorToList(collection.find(new BasicDBObject(NAME, name)));
-    }
-
-    public List<Product> find(Integer pageSize, Integer pageNumber) {
-        int skipAmount = pageNumber > 0 ? ((pageNumber - 1) * pageSize) : 0;
-
-        DBCursor cursor = collection.find()
-                .skip(skipAmount)
-                .limit(pageSize);
-
-        return cursorToList(cursor);
     }
 
     public List<Product> findByPriceRange(double lower, double upper) {
@@ -65,19 +38,8 @@ public class ProductRepository {
         return cursorToList(collection.find(new BasicDBObject("$or", terms)));
     }
 
-    private List<Product> cursorToList(DBCursor cursor) {
-        List<Product> products = new ArrayList<>();
-        try {
-            while (cursor.hasNext()) {
-                products.add(new Product((BasicDBObject) cursor.next()));
-            }
-            return products;
-        } finally {
-            cursor.close();
-        }
-    }
-
-    public long count() {
-        return collection.count();
+    @Override
+    protected Product create(BasicDBObject document) {
+        return new Product(document);
     }
 }

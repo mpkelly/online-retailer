@@ -60,7 +60,7 @@ public class CustomerController {
     public HttpEntity<CustomersResource> getPage(@RequestParam(value = "pageSize", required = false, defaultValue = DEFAULT_PAGE_SIZE) Integer pageSize,
                                                            @RequestParam(value = "pageNumber", required = false, defaultValue = "1") Integer pageNumber) {
 
-        List<Customer> customers = repository.find(pageSize, pageNumber);
+        List<Customer> customers = repository.browse(pageSize, pageNumber);
 
         CustomersResource customersResource = new CustomersResource();
         customersResource.setCustomers(assembler.toResources(customers));

@@ -74,7 +74,7 @@ public class ProductController {
     public HttpEntity<ProductsResource> getPage(@RequestParam(value = "pageSize", required = false, defaultValue = "1") Integer pageSize,
                                             @RequestParam(value = "pageNumber", required = false, defaultValue = DEFAULT_PAGE_SIZE) Integer pageNumber) {
 
-        List<Product> products = repository.find(pageSize, pageNumber);
+        List<Product> products = repository.browse(pageSize, pageNumber);
 
         long count = repository.count();
         int lastPage = (int) Math.ceil((double)count / pageSize);

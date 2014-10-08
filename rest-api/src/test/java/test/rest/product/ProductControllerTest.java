@@ -98,7 +98,7 @@ public class ProductControllerTest extends AbstractControllerTest {
     public void can_browse_products_page_by_page() throws Exception {
         when(repository.count())
             .thenReturn(2L);
-        when(repository.find(1, 1))
+        when(repository.browse(1, 1))
             .thenReturn(asList(new Product(new BasicDBObject(aProduct))));
 
         mvc.perform(get("/api/product/browse?pageSize=1&pageNumber=1")
