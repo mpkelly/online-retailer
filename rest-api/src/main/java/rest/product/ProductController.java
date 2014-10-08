@@ -9,41 +9,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static rest.product.JsonProducts.jsonProducts;
 import static rest.util.Json.jsonToMap;
 
 @RestController
+@RequestMapping(value = "/api/product", produces = "application/hal+json")
 public class ProductController {
 
+    static final String DEFAULT_PAGE_SIZE = "50";
+
+    private final ProductResourceAssembler assembler;
     private final ProductRepository repository;
 
     @Autowired
-    public ProductController(ProductRepository repository) {
+    public ProductController(ProductResourceAssembler assembler, ProductRepository repository) {
+        this.assembler = assembler;
         this.repository = repository;
     }
 
-    @RequestMapping(value = "/api/product", method = GET)
-    public HttpEntity<ProductApi> getProductApi() throws IOException {
+    @RequestMapping(method = GET)
+    public HttpEntity<ProductApi> getProductApi() {
         ProductApi productApi = new ProductApi();
-
-        productApi.add(linkTo(methodOn(this.getClass()).getProductApi()).withSelfRel());
-        productApi.add(linkTo(methodOn(this.getClass()).findProductById(":id")).withRel("find-by-id"));
-        productApi.add(linkTo(methodOn(this.getClass()).createProduct(":json")).withRel("create-product"));
-        productApi.add(linkTo(methodOn(this.getClass()).searchProducts(":terms")).withRel("search-products"));
-        productApi.add(linkTo(methodOn(this.getClass()).allProducts()).withRel("all-products"));
-
         return new ResponseEntity<>(productApi, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/product", method = POST)
-    public ResponseEntity<Void> createProduct(@RequestBody String json) throws IOException {
+    @RequestMapping(method = POST)
+    public ResponseEntity<Void> createProduct(@RequestBody String json)  {
         Product inserted = repository.insert(jsonToMap(json));
 
         HttpHeaders headers = new HttpHeaders();
@@ -52,37 +48,44 @@ public class ProductController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping("/api/product/id/{id}")
+    @RequestMapping(value = "/{id}", method = GET)
     @ResponseBody
-    public HttpEntity<JsonProduct> findProductById(@PathVariable("id") String id) {
+    public HttpEntity<ProductResource> findProductById(@PathVariable("id") String id) {
         Product product = repository.findById(id);
 
-        JsonProduct jsonProduct = new JsonProduct(product);
-        jsonProduct.add(linkTo(methodOn(getClass()).findProductById(id)).withSelfRel());
+        ProductResource productResource = assembler.toResource(product);
 
-        return new ResponseEntity<>(jsonProduct, HttpStatus.OK);
+        return new ResponseEntity<>(productResource, HttpStatus.OK);
     }
 
-    @RequestMapping("/api/product/search/{terms}")
+    @RequestMapping(value = "/search", method = GET)
     @ResponseBody
-    public HttpEntity<JsonProducts> searchProducts(@PathVariable("terms") String terms) {
+    public HttpEntity<ProductsResource> searchProducts(@RequestParam("terms") String terms) {
         List<Product> products = repository.searchByText(terms);
 
-        JsonProducts jsonProducts = jsonProducts(products);
-        jsonProducts.add(linkTo(methodOn(getClass()).searchProducts(terms)).withSelfRel());
+        ProductsResource resource = new ProductsResource();
+        resource.setProducts(assembler.toResources(products));
 
-        return new ResponseEntity<>(jsonProducts, HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    @RequestMapping("/api/product/all")
+    @RequestMapping(value = "/browse", method = GET)
     @ResponseBody
-    public HttpEntity<JsonProducts> allProducts() {
-        List<Product> products = repository.findAll();
+    public HttpEntity<ProductsResource> getPage(@RequestParam(value = "pageSize", required = false, defaultValue = "1") Integer pageSize,
+                                            @RequestParam(value = "pageNumber", required = false, defaultValue = DEFAULT_PAGE_SIZE) Integer pageNumber) {
 
-        JsonProducts jsonProducts = jsonProducts(products);
-        jsonProducts.add(linkTo(methodOn(getClass()).allProducts()).withSelfRel());
+        List<Product> products = repository.find(pageSize, pageNumber);
 
-        return new ResponseEntity<>(jsonProducts, HttpStatus.OK);
+        long count = repository.count();
+        int lastPage = (int) Math.ceil((double)count / pageSize);
+
+        ProductsResource resource = new ProductsResource();
+        resource.setProducts(assembler.toResources(products));
+
+        resource.add(linkTo(methodOn(getClass()).getPage(pageSize, pageNumber)).withSelfRel());
+        resource.add(linkTo(methodOn(getClass()).getPage(pageSize, 1)).withRel("firstPage"));
+        resource.add(linkTo(methodOn(getClass()).getPage(pageSize, lastPage)).withRel("lastPage"));
+
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
-
 }

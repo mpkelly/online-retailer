@@ -1,6 +1,6 @@
 package db.customer;
 
-import com.mongodb.BasicDBObject;
+import java.util.Map;
 
 public class Address {
 
@@ -14,11 +14,11 @@ public class Address {
     private final String city;
     private final String postcode;
 
-    Address(BasicDBObject address) {
-        this.number = address.getString(NUMBER);
-        this.street = address.getString(STREET);
-        this.city = address.getString(CITY);
-        this.postcode = address.getString(POSTCODE);
+    Address(Map<String, Object> address) {
+        this.number = address.get(NUMBER).toString();
+        this.street = address.get(STREET).toString();
+        this.city = address.get(CITY).toString();
+        this.postcode = address.get(POSTCODE).toString();
     }
 
     public String number() {

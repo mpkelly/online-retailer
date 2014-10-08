@@ -20,11 +20,23 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
         put(FIRST_NAME, "John");
         put(LAST_NAME, "Smith");
         put(INVOICE_ADDRESS, new HashMap<String, Object>() {{
-                put(NUMBER, "6a");
-                put(STREET, "The street");
-                put(CITY, "The city");
-                put(POSTCODE, "post code");
-            }}
+                    put(NUMBER, "6a");
+                    put(STREET, "The street");
+                    put(CITY, "The city");
+                    put(POSTCODE, "post code");
+                }}
+        );
+    }};
+
+    private final Map<String, Object> CUSTOMER_2 = new HashMap<String, Object>() {{
+        put(FIRST_NAME, "John");
+        put(LAST_NAME, "Doe");
+        put(INVOICE_ADDRESS, new HashMap<String, Object>() {{
+                    put(NUMBER, "5a");
+                    put(STREET, "The street");
+                    put(CITY, "The city");
+                    put(POSTCODE, "post code");
+                }}
         );
     }};
 
@@ -35,8 +47,14 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
     }
 
     @Before
-    public void createCollection() {
+    public void createRepository() {
         repository = new CustomerRepository(database);
+    }
+
+    @Before
+    public void insertDocuments() {
+        insertDocument(CUSTOMER_1);
+        insertDocument(CUSTOMER_2);
     }
 
     @Test
@@ -54,5 +72,12 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
         assertEquals("street", "The street", invoiceAddress.street());
         assertEquals("city", "The city", invoiceAddress.city());
         assertEquals("postcode", "post code", invoiceAddress.postcode());
+    }
+
+    @Test
+    public void can_find_customers() {
+        assertEquals("size", 1, repository.find(1, 1).size());
+        assertEquals("size", 1, repository.find(1, 2).size());
+        assertEquals("size", 2, repository.find(10, 1).size());
     }
 }

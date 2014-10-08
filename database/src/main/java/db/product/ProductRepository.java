@@ -36,8 +36,14 @@ public class ProductRepository {
         return cursorToList(collection.find(new BasicDBObject(NAME, name)));
     }
 
-    public List<Product> findAll() {
-        return cursorToList(collection.find());
+    public List<Product> find(Integer pageSize, Integer pageNumber) {
+        int skipAmount = pageNumber > 0 ? ((pageNumber - 1) * pageSize) : 0;
+
+        DBCursor cursor = collection.find()
+                .skip(skipAmount)
+                .limit(pageSize);
+
+        return cursorToList(cursor);
     }
 
     public List<Product> findByPriceRange(double lower, double upper) {
@@ -69,5 +75,9 @@ public class ProductRepository {
         } finally {
             cursor.close();
         }
+    }
+
+    public long count() {
+        return collection.count();
     }
 }

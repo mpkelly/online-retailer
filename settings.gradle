@@ -4,5 +4,3 @@ include 'database'
 
 include 'rest-api'
 
-include 'acceptance-tests'
-

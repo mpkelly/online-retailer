@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: nekohtml-1.9.20">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/nekohtml/nekohtml/1.9.20/nekohtml-1.9.20.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

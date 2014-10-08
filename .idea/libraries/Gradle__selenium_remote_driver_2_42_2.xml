@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: selenium-remote-driver-2.42.2">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/seleniumhq/selenium/selenium-remote-driver/2.42.2/selenium-remote-driver-2.42.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -20,7 +20,7 @@ public class Product {
     private final double price;
 
     @SuppressWarnings("unchecked")
-    Product(BasicDBObject product) {
+    public Product(BasicDBObject product) {
         this.id = product.getString(ID);
         this.categoryIds = (List<String>) product.get(CATEGORY_IDS);
         this.name = product.getString(NAME);

@@ -31,14 +31,18 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    compile("org.springframework.hateoas:spring-hateoas")
-    compile("com.fasterxml.jackson.core:jackson-databind")
-    compile("com.jayway.jsonpath:json-path:0.9.1")
+    compile 'org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-jetty'
+    compile 'org.springframework.hateoas:spring-hateoas'
+    compile 'com.fasterxml.jackson.core:jackson-databind'
+    compile 'com.jayway.jsonpath:json-path:0.9.1'
     compile project(':database')
 
-    testCompile 'org.seleniumhq.selenium:selenium-java:2.42.2'
+    testCompile 'org.springframework.hateoas:spring-hateoas'
+    testCompile 'com.fasterxml.jackson.core:jackson-databind'
+    testCompile 'com.jayway.jsonpath:json-path-assert:0.8.1'
+    testCompile 'org.springframework:spring-test:4.1.1.RELEASE'
+    testCompile 'org.mockito:mockito-all:1.9.5'
     testCompile("junit:junit")
 }
 

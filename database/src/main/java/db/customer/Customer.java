@@ -2,6 +2,8 @@ package db.customer;
 
 import com.mongodb.BasicDBObject;
 
+import java.util.Map;
+
 public class Customer {
 
     public static final String ID = "_id";
@@ -14,11 +16,12 @@ public class Customer {
     private final String lastName;
     private final Address invoiceAddress;
 
-    Customer(BasicDBObject customer) {
+    @SuppressWarnings("unchecked")
+    public Customer(BasicDBObject customer) {
         this.id = customer.getString(ID);
         this.firstName = customer.getString(FIRST_NAME);
         this.lastName = customer.getString(LAST_NAME);
-        this.invoiceAddress = new Address((BasicDBObject) customer.get(INVOICE_ADDRESS));
+        this.invoiceAddress = new Address((Map<String, Object>) customer.get(INVOICE_ADDRESS));
     }
 
     public String id() {
