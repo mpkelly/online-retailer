@@ -68,6 +68,7 @@ public class CustomerRepositoryTest extends AbstractRepositoryTest {
         assertEquals("last name", "Smith", customer.lastName());
 
         Address invoiceAddress = customer.invoiceAddress();
+
         assertEquals("number", "6a", invoiceAddress.number());
         assertEquals("street", "The street", invoiceAddress.street());
         assertEquals("city", "The city", invoiceAddress.city());

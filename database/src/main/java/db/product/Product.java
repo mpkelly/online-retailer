@@ -1,11 +1,12 @@
 package db.product;
 
 import com.mongodb.BasicDBObject;
+import db.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class Product implements Entity {
 
     public static final String ID = "_id";
     public static final String CATEGORY_IDS = "category_ids";

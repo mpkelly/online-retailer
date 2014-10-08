@@ -106,7 +106,7 @@ public class ProductControllerTest extends AbstractControllerTest {
 
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/hal+json"))
-            .andExpect(jsonPath("products", hasSize(1)))
+            .andExpect(jsonPath("items", hasSize(1)))
             .andExpect(jsonPath("$_links.self.href").value("http://localhost/api/product/browse?pageSize=1&pageNumber=1"))
             .andExpect(jsonPath("$_links.firstPage.href").value("http://localhost/api/product/browse?pageSize=1&pageNumber=1"))
             .andExpect(jsonPath("$_links.lastPage.href").value("http://localhost/api/product/browse?pageSize=1&pageNumber=2"));

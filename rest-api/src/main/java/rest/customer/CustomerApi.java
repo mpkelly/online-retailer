@@ -17,8 +17,8 @@ public class CustomerApi extends ResourceSupport {
         Class<CustomerController> controller = CustomerController.class;
 
         add(linkTo(methodOn(controller).getCustomerApi()).withSelfRel());
-        add(linkTo(methodOn(controller).createCustomer(":customer")).withRel("create"));
-        add(linkTo(methodOn(controller).getPage(parseInt(DEFAULT_PAGE_SIZE), 1)).withRel("browse"));
-        add(linkTo(methodOn(controller).findCustomerById(":id")).withRel("find"));
+        add(linkTo(methodOn(controller).create(":customer")).withRel("create"));
+        add(linkTo(methodOn(controller).browse(parseInt(DEFAULT_PAGE_SIZE), 1)).withRel("browse"));
+        add(linkTo(methodOn(controller).findById(":id")).withRel("find"));
     }
 }

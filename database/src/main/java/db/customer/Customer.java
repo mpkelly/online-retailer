@@ -1,10 +1,11 @@
 package db.customer;
 
 import com.mongodb.BasicDBObject;
+import db.Entity;
 
 import java.util.Map;
 
-public class Customer {
+public class Customer implements Entity {
 
     public static final String ID = "_id";
     public static final String FIRST_NAME = "first_name";
